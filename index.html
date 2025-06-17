@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación Completa de Desarrollo Web</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --code-bg: #1e1e1e;
+            --sidebar-width: 280px;
+            --header-height: 80px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 20px;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+            min-height: 100vh;
+            padding-top: var(--header-height);
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            background: var(--secondary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Main Layout */
+        .container {
+            display: flex;
+            max-width: 1800px;
+            margin: 0 auto;
+            min-height: calc(100vh - var(--header-height));
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            padding: 30px 0;
+            box-shadow: 3px 0 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: var(--header-height);
+            height: calc(100vh - var(--header-height));
+            overflow-y: auto;
+        }
+        
+        .module-title {
+            padding: 15px 30px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            border-left: 5px solid var(--secondary);
+            margin-bottom: 15px;
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0 30px;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-nav a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--dark);
+            border-radius: 6px;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .sidebar-nav a:hover, 
+        .sidebar-nav a.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 40px 50px;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.05);
+        }
+        
+        /* Module Styles */
+        .module {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .module-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--secondary);
+        }
+        
+        .module-header h1 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .module-desc {
+            font-size: 1.3rem;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Topic Styles */
+        .topic {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            transition: var(--transition);
+        }
+        
+        .topic:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f4f8;
+        }
+        
+        .topic-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #1a5f9e 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .topic-title {
+            font-size: 1.9rem;
+            color: var(--primary);
+        }
+        
+        .explanation {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .explanation h3 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        /* Code Styles */
+        .code-block {
+            background: var(--code-bg);
+            color: #f0f0f0;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #aaa;
+            font-family: inherit;
+        }
+        
+        .code-lang {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #ddd;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        /* Syntax Highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .val { color: #98c379; }
+        .com { color: #5c6370; }
+        .key { color: #c678dd; }
+        .fun { color: #61afef; }
+        
+        /* Examples */
+        .example {
+            background: #f0f8ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border: 1px solid #d0e5ff;
+        }
+        
+        .example-title {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        /* Tips & Notes */
+        .tip-box {
+            background: #fffde7;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 1.1rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                height: auto;
+                padding: 20px;
+            }
+            
+            .sidebar-nav ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .sidebar-nav li {
+                flex: 1;
+                min-width: 200px;
+            }
+            
+            .content {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                font-size: 18px;
+            }
+            
+            .topic {
+                padding: 25px;
+            }
+            
+            .topic-title {
+                font-size: 1.6rem;
+            }
+            
+            .module-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .code-block {
+                padding: 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">DW</div>
+            <div>Documentación Desarrollo Web</div>
+        </div>
+        <div class="header-info">Recurso Completo para Desarrolladores</div>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="module-title">Módulo 1: Frontend</div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#html-css-js" class="active">HTML, CSS y JavaScript</a></li>
+                    <li><a href="#react">React.js</a></li>
+                </ul>
+            </nav>
+            
+            <div class="module-title">Módulo 2: Backend</div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#node-mysql">Node.js + MySQL</a></li>
+                </ul>
+            </nav>
+            
+            <div class="module-title">Recursos</div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#cheatsheets">Cheatsheets</a></li>
+                    <li><a href="#best-practices">Mejores Prácticas</a></li>
+                    <li><a href="#tools">Herramientas</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="content">
+            <!-- Módulo 1: HTML, CSS y JS -->
+            <section id="html-css-js" class="module">
+                <div class="module-header">
+                    <h1>Módulo 1: Fundamentos Web (HTML, CSS, JavaScript)</h1>
+                    <p class="module-desc">Aprende los pilares del desarrollo web frontend con una guía completa de HTML5, CSS3 y JavaScript moderno.</p>
+                </div>
+                
+                <!-- Tema 1 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <div class="topic-icon">1</div>
+                        <h2 class="topic-title">Semántica HTML5</h2>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h3>¿Qué es la semántica en HTML5?</h3>
+                        <p>La semántica en HTML5 se refiere al uso de etiquetas que describen el significado del contenido en lugar de solo su apariencia. Esto mejora la accesibilidad, el SEO y la mantenibilidad del código.</p>
+                        
+                        <div class="tip-box">
+                            <strong>Consejo:</strong> Usa elementos semánticos para estructurar tu contenido. Evita el uso excesivo de divs cuando exista una etiqueta más descriptiva.
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-lang">HTML</div>
+                            <button class="copy-btn">Copiar</button>
+                        </div>
+                        <pre><code>&lt;<span class="tag">header</span>&gt;
+  &lt;<span class="tag">h1</span>&gt;Título del Sitio&lt;/<span class="tag">h1</span>&gt;
+  &lt;<span class="tag">nav</span>&gt;
+    &lt;<span class="tag">a</span> <span class="attr">href</span>=<span class="val">"#"</span>&gt;Inicio&lt;/<span class="tag">a</span>&gt;
+    &lt;<span class="tag">a</span> <span class="attr">href</span>=<span class="val">"#"</span>&gt;Blog&lt;/<span class="tag">a</span>&gt;
+  &lt;/<span class="tag">nav</span>&gt;
+&lt;/<span class="tag">header</span>&gt;
+
+&lt;<span class="tag">main</span>&gt;
+  &lt;<span class="tag">article</span>&gt;
+    &lt;<span class="tag">h2</span>&gt;Título del Artículo&lt;/<span class="tag">h2</span>&gt;
+    &lt;<span class="tag">p</span>&gt;Contenido principal...&lt;/<span class="tag">p</span>&gt;
+  &lt;/<span class="tag">article</span>&gt;
+  
+  &lt;<span class="tag">aside</span>&gt;
+    &lt;<span class="tag">h3</span>&gt;Contenido Relacionado&lt;/<span class="tag">h3</span>&gt;
+    &lt;<span class="tag">p</span>&gt;Información adicional...&lt;/<span class="tag">p</span>&gt;
+  &lt;/<span class="tag">aside</span>&gt;
+&lt;/<span class="tag">main</span>&gt;
+
+&lt;<span class="tag">footer</span>&gt;
+  &lt;<span class="tag">p</span>&gt;© 2023 Mi Sitio Web&lt;/<span class="tag">p</span>&gt;
+&lt;/<span class="tag">footer</span>&gt;</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h3 class="example-title">Elementos Semánticos Clave:</h3>
+                        <ul>
+                            <li><strong>&lt;header&gt;</strong>: Cabecera de la página o sección</li>
+                            <li><strong>&lt;nav&gt;</strong>: Contiene los enlaces de navegación</li>
+                            <li><strong>&lt;main&gt;</strong>: Contenido principal único en la página</li>
+                            <li><strong>&lt;article&gt;</strong>: Contenido independiente y autocontenido</li>
+                            <li><strong>&lt;section&gt;</strong>: Agrupación temática de contenido</li>
+                            <li><strong>&lt;aside&gt;</strong>: Contenido relacionado indirectamente</li>
+                            <li><strong>&lt;footer&gt;</strong>: Pie de página o sección</li>
+                            <li><strong>&lt;figure&gt; y &lt;figcaption&gt;</strong>: Para imágenes y su descripción</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tema 2 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <div class="topic-icon">2</div>
+                        <h2 class="topic-title">Flexbox y CSS Grid</h2>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h3>Sistemas de Layout Modernos</h3>
+                        <p>Flexbox y CSS Grid son dos poderosos sistemas de diseño en CSS que permiten crear layouts complejos y responsivos con menos código.</p>
+                        
+                        <div class="tip-box">
+                            <strong>Regla práctica:</strong> Usa Flexbox para diseños unidimensionales (en una dirección) y CSS Grid para diseños bidimensionales (filas y columnas).
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-lang">CSS</div>
+                            <button class="copy-btn">Copiar</button>
+                        </div>
+                        <pre><code><span class="com">/* Flexbox Example */</span>
+<span class="tag">.container</span> {
+  <span class="key">display</span>: <span class="val">flex</span>;
+  <span class="key">justify-content</span>: <span class="val">space-between</span>;
+  <span class="key">align-items</span>: <span class="val">center</span>;
+  <span class="key">flex-wrap</span>: <span class="val">wrap</span>;
+}
+
+<span class="com">/* CSS Grid Example */</span>
+<span class="tag">.grid-container</span> {
+  <span class="key">display</span>: <span class="val">grid</span>;
+  <span class="key">grid-template-columns</span>: <span class="val">repeat(auto-fit, minmax(250px, 1fr))</span>;
+  <span class="key">grid-gap</span>: <span class="val">20px</span>;
+}
+
+<span class="com">/* Grid Area Example */</span>
+<span class="tag">.header</span> { <span class="key">grid-area</span>: <span class="val">header</span>; }
+<span class="tag">.main</span> { <span class="key">grid-area</span>: <span class="val">main</span>; }
+<span class="tag">.sidebar</span> { <span class="key">grid-area</span>: <span class="val">sidebar</span>; }
+
+<span class="tag">.app-layout</span> {
+  <span class="key">display</span>: <span class="val">grid</span>;
+  <span class="key">grid-template-areas</span>:
+    <span class="val">"header header"</span>
+    <span class="val">"sidebar main"</span>;
+  <span class="key">grid-template-columns</span>: <span class="val">1fr 3fr</span>;
+}</code></pre>
+                    </div>
+                </div>
+                
+                <!-- Tema 3 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <div class="topic-icon">3</div>
+                        <h2 class="topic-title">JavaScript Moderno (ES6+)</h2>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h3>Características Esenciales de ES6+</h3>
+                        <p>ECMAScript 2015 (ES6) introdujo características fundamentales que cambiaron la forma en que escribimos JavaScript. Estas son algunas de las más importantes:</p>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-lang">JavaScript</div>
+                            <button class="copy-btn">Copiar</button>
+                        </div>
+                        <pre><code><span class="com">// Arrow Functions</span>
+<span class="key">const</span> <span class="fun">sum</span> = (a, b) => a + b;
+
+<span class="com">// Template Literals</span>
+<span class="key">const</span> name = <span class="val">'Carlos'</span>;
+<span class="key">const</span> greeting = <span class="val">`Hola, ${name}!`</span>;
+
+<span class="com">// Destructuring</span>
+<span class="key">const</span> user = { <span class="attr">id</span>: 1, <span class="attr">name</span>: <span class="val">'Ana'</span>, <span class="attr">email</span>: <span class="val">'ana@example.com'</span> };
+<span class="key">const</span> { name, email } = user;
+
+<span class="com">// Spread Operator</span>
+<span class="key">const</span> arr1 = [1, 2, 3];
+<span class="key">const</span> arr2 = [...arr1, 4, 5]; <span class="com">// [1, 2, 3, 4, 5]</span>
+
+<span class="com">// Promises y Async/Await</span>
+<span class="key">const</span> <span class="fun">fetchData</span> = async () => {
+  <span class="key">try</span> {
+    <span class="key">const</span> response = await <span class="fun">fetch</span>(<span class="val">'https://api.example.com/data'</span>);
+    <span class="key">const</span> data = await response.<span class="fun">json</span>();
+    <span class="fun">console</span>.<span class="fun">log</span>(data);
+  } <span class="key">catch</span> (error) {
+    <span class="fun">console</span>.<span class="fun">error</span>(<span class="val">'Error:'</span>, error);
+  }
+};
+
+<span class="com">// Modules</span>
+<span class="key">import</span> { <span class="fun">sum</span>, <span class="fun">multiply</span> } <span class="key">from</span> <span class="val">'./math.js'</span>;
+<span class="key">export default</span> <span class="fun">function</span> <span class="fun">calculate</span>() { ... }</code></pre>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Módulo 2: React -->
+            <section id="react" class="module">
+                <div class="module-header">
+                    <h1>Módulo 2: Desarrollo con React.js</h1>
+                    <p class="module-desc">Aprende a construir aplicaciones modernas con React, el framework de JavaScript más popular.</p>
+                </div>
+                
+                <!-- Tema 1 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <div class="topic-icon">1</div>
+                        <h2 class="topic-title">Componentes y Props</h2>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h3>Fundamentos de React</h3>
+                        <p>React se basa en componentes reutilizables que reciben datos a través de props (propiedades) y mantienen su propio estado interno.</p>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-lang">JSX</div>
+                            <button class="copy-btn">Copiar</button>
+                        </div>
+                        <pre><code><span class="com">// Componente funcional</span>
+<span class="key">function</span> <span class="fun">Welcome</span>(props) {
+  <span class="key">return</span> &lt;<span class="tag">h1</span>&gt;Hola, {props.name}&lt;/<span class="tag">h1</span>&gt;;
+}
+
+<span class="com">// Componente de clase</span>
+<span class="key">class</span> <span class="fun">Welcome</span> <span class="key">extends</span> <span class="fun">React.Component</span> {
+  <span class="fun">render</span>() {
+    <span class="key">return</span> &lt;<span class="tag">h1</span>&gt;Hola, {this.props.name}&lt;/<span class="tag">h1</span>&gt;;
+  }
+}
+
+<span class="com">// Uso del componente</span>
+<span class="key">function</span> <span class="fun">App</span>() {
+  <span class="key">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">Welcome</span> <span class="attr">name</span>=<span class="val">"Sara"</span> /&gt;
+      &lt;<span class="tag">Welcome</span> <span class="attr">name</span>=<span class="val">"Carlos"</span> /&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre>
+                    </div>
+                </div>
+                
+                <!-- Tema 2 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <div class="topic-icon">2</div>
+                        <h2 class="topic-title">Hooks Avanzados</h2>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h3>Gestión de Estado y Efectos</h3>
+                        <p>Los Hooks son funciones que te permiten "enganchar" el estado de React y el ciclo de vida desde componentes funcionales.</p>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-lang">JSX</div>
+                            <button class="copy-btn">Copiar</button>
+                        </div>
+                        <pre><code><span class="key">import</span> { useState, useEffect, useContext, useReducer } <span class="key">from</span> <span class="val">'react'</span>;
+
+<span class="com">// useState: Gestión de estado local</span>
+<span class="key">function</span> <span class="fun">Counter</span>() {
+  <span class="key">const</span> [count, setCount] = <span class="fun">useState</span>(0);
+
+  <span class="key">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">p</span>&gt;Contador: {count}&lt;/<span class="tag">p</span>&gt;
+      &lt;<span class="tag">button</span> <span class="attr">onClick</span>={() => <span class="fun">setCount</span>(count + 1)}&gt;
+        Incrementar
+      &lt;/<span class="tag">button</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}
+
+<span class="com">// useEffect: Efectos secundarios</span>
+<span class="key">function</span> <span class="fun">DataFetcher</span>({ userId }) {
+  <span class="key">const</span> [data, setData] = <span class="fun">useState</span>(null);
+
+  <span class="fun">useEffect</span>(() => {
+    <span class="key">const</span> <span class="fun">fetchData</span> = async () => {
+      <span class="key">const</span> response = await <span class="fun">fetch</span>(`https://api.example.com/users/${userId}`);
+      <span class="key">const</span> jsonData = await response.<span class="fun">json</span>();
+      <span class="fun">setData</span>(jsonData);
+    };
+
+    <span class="fun">fetchData</span>();
+    
+    <span class="com">// Cleanup function</span>
+    <span class="key">return</span> () => {
+      <span class="com">// Cancelar peticiones o limpiar suscripciones</span>
+    };
+  }, [userId]); <span class="com">// Dependencias</span>
+
+  <span class="key">return</span> &lt;<span class="tag">div</span>&gt;{data ? data.name : 'Cargando...'}&lt;/<span class="tag">div</span>&gt;;
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Módulo 3: Node.js y MySQL -->
+            <section id="node-mysql" class="module">
+                <div class="module-header">
+                    <h1>Módulo 3: Backend con Node.js y MySQL</h1>
+                    <p class="module-desc">Aprende a construir servidores robustos con Node.js y a interactuar con bases de datos MySQL.</p>
+                </div>
+                
+                <!-- Tema 1 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <div class="topic-icon">1</div>
+                        <h2 class="topic-title">Express.js: Creación de APIs</h2>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h3>Framework Express para Node.js</h3>
+                        <p>Express es el framework más popular para Node.js que simplifica la creación de APIs RESTful y aplicaciones web.</p>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-lang">JavaScript</div>
+                            <button class="copy-btn">Copiar</button>
+                        </div>
+                        <pre><code><span class="key">const</span> express = <span class="fun">require</span>(<span class="val">'express'</span>);
+<span class="key">const</span> app = <span class="fun">express</span>();
+<span class="key">const</span> port = 3000;
+
+<span class="com">// Middleware para parsear JSON</span>
+app.<span class="fun">use</span>(express.<span class="fun">json</span>());
+
+<span class="com">// Ruta GET básica</span>
+app.<span class="fun">get</span>(<span class="val">'/'</span>, (req, res) => {
+  res.<span class="fun">send</span>(<span class="val">'¡Hola Mundo!'</span>);
+});
+
+<span class="com">// Ruta con parámetros</span>
+app.<span class="fun">get</span>(<span class="val">'/users/:id'</span>, (req, res) => {
+  <span class="key">const</span> userId = req.params.id;
+  <span class="com">// Lógica para obtener usuario...</span>
+  res.<span class="fun">json</span>({ <span class="attr">id</span>: userId, <span class="attr">name</span>: <span class="val">"Juan Pérez"</span> });
+});
+
+<span class="com">// Ruta POST para crear recursos</span>
+app.<span class="fun">post</span>(<span class="val">'/users'</span>, (req, res) => {
+  <span class="key">const</span> newUser = req.body;
+  <span class="com">// Lógica para guardar el usuario...</span>
+  res.<span class="fun">status</span>(201).<span class="fun">json</span>(newUser);
+});
+
+<span class="com">// Manejo de errores</span>
+app.<span class="fun">use</span>((err, req, res, next) => {
+  <span class="fun">console</span>.<span class="fun">error</span>(err.stack);
+  res.<span class="fun">status</span>(500).<span class="fun">send</span>(<span class="val">'¡Algo salió mal!'</span>);
+});
+
+app.<span class="fun">listen</span>(port, () => {
+  <span class="fun">console</span>.<span class="fun">log</span>(`Servidor escuchando en http://localhost:${port}`);
+});</code></pre>
+                    </div>
+                </div>
+                
+                <!-- Tema 2 -->
+                <div class="topic">
+                    <div class="topic-header">
+                        <div class="topic-icon">2</div>
+                        <h2 class="topic-title">Conexión a MySQL</h2>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h3>Interactuando con Bases de Datos</h3>
+                        <p>MySQL es un sistema de gestión de bases de datos relacionales ampliamente utilizado. Conecta tu aplicación Node.js a MySQL para almacenar y recuperar datos.</p>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-lang">JavaScript</div>
+                            <button class="copy-btn">Copiar</button>
+                        </div>
+                        <pre><code><span class="key">const</span> mysql = <span class="fun">require</span>(<span class="val">'mysql2'</span>);
+
+<span class="com">// Crear conexión a la base de datos</span>
+<span class="key">const</span> pool = mysql.<span class="fun">createPool</span>({
+  <span class="attr">host</span>: <span class="val">'localhost'</span>,
+  <span class="attr">user</span>: <span class="val">'root'</span>,
+  <span class="attr">password</span>: <span class="val">'password'</span>,
+  <span class="attr">database</span>: <span class="val">'my_database'</span>,
+  <span class="attr">waitForConnections</span>: <span class="key">true</span>,
+  <span class="attr">connectionLimit</span>: 10,
+  <span class="attr">queueLimit</span>: 0
+});
+
+<span class="com">// Promisify para usar async/await</span>
+<span class="key">const</span> promisePool = pool.<span class="fun">promise</span>();
+
+<span class="com">// Ejemplo de consulta</span>
+<span class="key">const</span> <span class="fun">getUsers</span> = async () => {
+  <span class="key">try</span> {
+    <span class="key">const</span> [rows] = await promisePool.<span class="fun">query</span>(<span class="val">'SELECT * FROM users'</span>);
+    <span class="key">return</span> rows;
+  } <span class="key">catch</span> (error) {
+    <span class="fun">console</span>.<span class="fun">error</span>(<span class="val">'Error al obtener usuarios:'</span>, error);
+    <span class="key">throw</span> error;
+  }
+};
+
+<span class="com">// Ejemplo de inserción</span>
+<span class="key">const</span> <span class="fun">createUser</span> = async (userData) => {
+  <span class="key">const</span> { name, email } = userData;
+  <span class="key">try</span> {
+    <span class="key">const</span> [result] = await promisePool.<span class="fun">query</span>(
+      <span class="val">'INSERT INTO users (name, email) VALUES (?, ?)'</span>,
+      [name, email]
+    );
+    <span class="key">return</span> { <span class="attr">id</span>: result.insertId, ...userData };
+  } <span class="key">catch</span> (error) {
+    <span class="fun">console</span>.<span class="fun">error</span>(<span class="val">'Error al crear usuario:'</span>, error);
+    <span class="key">throw</span> error;
+  }
+};</code></pre>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <footer>
+        <p>Documentación Completa de Desarrollo Web | © 2023 Todos los derechos reservados</p>
+        <p>Recurso educativo - Para uso personal y académico</p>
+    </footer>
+
+    <script>
+        // Funcionalidad para copiar código
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const codeBlock = this.parentElement.nextElementSibling;
+                const textToCopy = codeBlock.textContent;
+                
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = '¡Copiado!';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Error al copiar: ', err);
+                    });
+            });
+        });
+        
+        // Navegación suave
+        document.querySelectorAll('.sidebar-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Actualizar enlace activo
+                document.querySelectorAll('.sidebar-nav a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Desplazamiento suave
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
